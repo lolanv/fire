@@ -3,37 +3,36 @@
 
 #include <string>
 
+enum class AutomobileType { PRIVATE, TRANSPORT };
+
 class Automobile {
 private:
+    /* data */
     std::string _model_name;
-    std::string _automobile_type;
+    AutomobileType _automobile_type;
     float _automobile_price;
     float _automobile_mileage;
-
+    
 public:
-    // Parameterized Constructor
-    Automobile(std::string model_name, std::string automobile_type, float automobile_price, float automobile_mileage);
+    Automobile(const std::string& model_name, AutomobileType automobile_type, float automobile_price, float automobile_mileage)
+        : _model_name(model_name), _automobile_type(automobile_type), _automobile_price(automobile_price), _automobile_mileage(automobile_mileage) {}
 
-    // Disabled copy constructor
+    Automobile(/* args */)=default;
+
+    //copy constructor and copy assignment operator
     Automobile(const Automobile&) = delete;
 
-    // Disabled copy assignment operator
     Automobile& operator=(const Automobile&) = delete;
-
-    // Disabled move constructor    
+    //move constructor and move assignment operator
     Automobile(Automobile&&) = delete;
 
-    // Disabled move assignment operator
     Automobile& operator=(Automobile&&) = delete;
 
-    // Getter for automobile price
-    float getAutomobilePrice() const;
+    ~Automobile()=default;
 
-    // Getter for automobile type
-    std::string getAutomobileType() const;
-
-    // Getter for automobile mileage
-    float getAutomobileMileage() const;
+    float getMileage() const { return _automobile_mileage; }
+    float getPrice() const { return _automobile_price; }
+    AutomobileType getType() const { return _automobile_type; }
 };
 
-#endif /* AUTOMOBILE_H */
+#endif // AUTOMOBILE_H
