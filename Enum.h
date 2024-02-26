@@ -2,9 +2,9 @@
 #define ENUM_H
 
 #include<iostream>
- enum class AutomobileType{
-        PRIVATE,
-        TRANSPORT
- };
+enum class CarType { 
+COMMUTE, 
+COMMERCIAL, 
+TRANSPORT };
 
 #endif // ENUM_H

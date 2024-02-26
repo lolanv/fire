@@ -1,25 +1,14 @@
 #ifndef FUNCTIONALITIES_H
 #define FUNCTIONALITIES_H
 
-#include "Automobile.h"
+#include "Vehicle.h"
 #include <vector>
 #include <memory>
 
-std::vector<std::shared_ptr<Automobile>> createAutomobiles();
-
-//for calculating avg mileage
-
-float calculateAverageMileage(const std::vector<std::shared_ptr<Automobile>>& automobiles); 
-
-//priavte or transport 
-int selectType(const std::vector<std::shared_ptr<Automobile>>& automobiles, AutomobileType type);
-
-//price abv 20000
-
-bool hasPriceAbove(const std::vector<std::shared_ptr<Automobile>>& automobiles, float priceThreshold);
-
-//deallocation
-
-void destroyAutomobiles(std::vector<std::shared_ptr<Automobile>>& automobiles);
+void CreateVehicles(std::vector<std::shared_ptr<Vehicle>>& vehicles);
+void PrintServiceCost(const std::vector<std::shared_ptr<Vehicle>>& vehicles);
+void PrintTaxExemptionAmount(const std::vector<std::shared_ptr<Vehicle>>& vehicles);
+void DisplayVehicleInfo(const std::vector<std::shared_ptr<Vehicle>>& vehicles, const std::string& reg_number);
+void DestroyVehicles(std::vector<std::shared_ptr<Vehicle>>& vehicles);
 
 #endif // FUNCTIONALITIES_H

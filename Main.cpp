@@ -1,21 +1,18 @@
 #include "Functionalities.h"
+#include "Car.h"
+#include "Bike.h"
 #include <iostream>
+#include <memory>
 
 int main() {
-    try {
-        auto automobiles = createAutomobiles();
+    std::vector<std::shared_ptr<Vehicle>> vehicles;
+    CreateVehicles(vehicles);
 
-        std::cout << "Avg. Mileage: " << calculateAverageMileage(automobiles) << std::endl;
+    PrintServiceCost(vehicles);
+    PrintTaxExemptionAmount(vehicles);
+    DisplayVehicleInfo(vehicles, "XYZ");
 
-        std::cout << "PRIVATE automobiles: " << selectType(automobiles, AutomobileType::PRIVATE) << std::endl;
-
-        std::cout << "Atleast one automobile with price above 2000? " << std::boolalpha
-                  << hasPriceAbove(automobiles, 2000.0f) << std::endl;
-
-        destroyAutomobiles(automobiles);
-    } catch (const std::exception& ex) {
-        std::cerr << "Exception occurred: " << ex.what() << std::endl;
-    }
+    DestroyVehicles(vehicles);
 
     return 0;
 }
