@@ -1,26 +1,25 @@
-#include <iostream>
-#include "Automobile.h"
-#include "functionalities.h"
+// main.cpp
+
+#include "functions.h"
 
 int main() {
-    try {
-        auto automobiles = createAutomobiles();
+    std::vector<void(*)(const std::string&)> functions = {
+        function2,
+        function3,
+        function4,
+        function5,
+        function6
+    };
 
-        std::cout << "Average Mileage: " << averageMileage(automobiles) << std::endl;
+    std::vector<std::string> data = {
+        "Hello, world!",
+        "C++ is awesome",
+        "abcdef",
+        " invalid string",
+        "abccdda"
+    };
 
-        std::string typeToCount = "private";
-        std::cout << "Count of automobiles with type " << typeToCount << ": " << countAutomobileType(automobiles, typeToCount) << std::endl;
-
-        if (hasPriceAbove(automobiles, 20000)) {
-            std::cout << "At least one automobile has a price above 20000." << std::endl;
-        } else {
-            std::cout << "No automobile has a price above 20000." << std::endl;
-        }
-
-        destroyAutomobiles(automobiles);
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    adaptorFunction(functions, data);
 
     return 0;
 }
