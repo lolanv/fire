@@ -1,25 +1,27 @@
-// main.cpp
-
-#include "functions.h"
+#include <iostream>
+#include <stdexcept>
+#include "functionalties.h"
 
 int main() {
-    std::vector<void(*)(const std::string&)> functions = {
-        function2,
-        function3,
-        function4,
-        function5,
-        function6
-    };
+    try {
+        // Execute the functionalities without using adaptor function
+        std::vector<Product*> products = Functionalities::createProductsOnHeap();
+        std::cout << "Average Product Price (FOOD): " << Functionalities::averageProductPriceByType(products, "FOOD") << std::endl;
+        Functionalities::DisplayNTaxAmounts(products, 3);
+        Functionalities::checkTaxAmountsBelow500(products);
+        Functionalities::countProductTypeOriginCombinations(products);
 
-    std::vector<std::string> data = {
-        "Hello, world!",
-        "C++ is awesome",
-        "abcdef",
-        " invalid string",
-        "abccdda"
-    };
+        // Execute the functionalities using adaptor function
+        std::function<void(const std::vector<Product*>&)> boundDisplayNTaxAmounts = Functionalities::bindedDisplayNTaxAmounts(3);
+        boundDisplayNTaxAmounts(products);
 
-    adaptorFunction(functions, data);
+        // Clean up allocated memory
+        for (Product* p : products) {
+            delete p;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
 
     return 0;
 }
