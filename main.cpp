@@ -7,5 +7,5 @@ int main() {
 
     applyFunctions(functions, data);
 
-    return 0; ajgdjagd
+    return 0;
 }
