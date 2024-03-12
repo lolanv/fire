@@ -1,50 +1,35 @@
-#include "Functionalities.h"
+//Main.cpp
+#include "TransportVehicle.h"
+#include "functionalities .h"
+#include "Permit.h"
+#include <memory>
 #include <thread>
-#include<iostream>
+#include <vector>
 
 int main() {
-    // Create instances of TransportVehicle on the heap
-    std::vector<Functionalities::SharedTransportVehicle> vehicles;
-    vehicles.push_back(std::make_shared<TransportVehicle>(
-        std::make_shared<Permit>("P001", 6), "BUS", 50, 10));
-    vehicles.push_back(std::make_shared<TransportVehicle>(
-        std::make_shared<Permit>("P002", 8), "CAB", 4, 5));
-    vehicles.push_back(std::make_shared<TransportVehicle>(
-        std::make_shared<Permit>("P003", 4), "MINI_VAN", 8, 8));
-    vehicles.push_back(std::make_shared<TransportVehicle>(
-        std::make_shared<Permit>("P004", 10), "BUS", 40, 12));
+    // Creating permits
+    std::shared_ptr<Permit> permit1 = std::make_shared<Permit>("P123", 6);
+    std::shared_ptr<Permit> permit2 = std::make_shared<Permit>("P456", 9);
+    std::shared_ptr<Permit> permit3 = std::make_shared<Permit>("P789", 12);
+    std::shared_ptr<Permit> permit4 = std::make_shared<Permit>("P012", 6);
 
-    // Create an instance of Functionalities
-    Functionalities functionalities(vehicles);
+    // Creating transport vehicles
+    std::vector<std::shared_ptr<TransportVehicle>> vehicles;
+    vehicles.push_back(std::make_shared<TransportVehicle>(permit1, VehicleType::BUS, 50, 10));
+    vehicles.push_back(std::make_shared<TransportVehicle>(permit2, VehicleType::CAB, 4, 5));
+    vehicles.push_back(std::make_shared<TransportVehicle>(permit3, VehicleType::MINI_VAN, 8, 8));
+    vehicles.push_back(std::make_shared<TransportVehicle>(permit4, VehicleType::BUS, 40, 7));
 
     // Execute each functionality in a separate thread
-    std::thread thread1([&functionalities]() {
-        std::optional<std::string> permitNumber = functionalities.findPermitNumberAtIndex(2);
-        if (permitNumber) {
-            std::cout << "Permit number at index 2: " << *permitNumber << std::endl;
-        } else {
-            std::cout << "Invalid index." << std::endl;
-        }
-    });
+    std::vector<std::thread> threads;
+    threads.push_back(std::thread(findPermitNumber, std::ref(vehicles), 2)); // Find permit number at index 2
+    threads.push_back(std::thread(printAverageSeatCount, std::ref(vehicles), VehicleType::CAB)); // Print average seat count for BUS
+    threads.push_back(std::thread(checkAllSameVehicleType, std::ref(vehicles))); // Check if all vehicles have the same type
 
-    std::thread thread2([&functionalities]() {
-        std::optional<double> averageSeatCount = functionalities.calculateAverageSeatCount("BUS");
-        if (averageSeatCount) {
-            std::cout << "Average seat count for BUS: " << *averageSeatCount << std::endl;
-        } else {
-            std::cout << "No vehicles of type BUS found." << std::endl;
-        }
-    });
-
-    std::thread thread3([&functionalities]() {
-        bool allSame = functionalities.areAllVehicleTypesSame();
-        std::cout << "All vehicle types are the same: " << std::boolalpha << allSame << std::endl;
-    });
-
-    // Join threads
-    thread1.join();
-    thread2.join();
-    thread3.join();
+    // Join all threads
+    for (auto& thread : threads) {
+        thread.join();
+    }
 
     return 0;
 }

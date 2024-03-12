@@ -1,3 +1,5 @@
+
+
 #ifndef PERMIT_H
 #define PERMIT_H
 
@@ -5,14 +7,16 @@
 
 class Permit {
 public:
-    Permit(std::string permitNumber, int durationRemaining);
+    Permit(const std::string& permitNumber, int permitDurationRemaining)
+        : _permit_number(permitNumber), _permit_duration_remaining(permitDurationRemaining) {}
 
-    std::string getPermitNumber() const;
-    int getPermitDurationRemaining() const;
+    std::string getPermitNumber() const { return _permit_number; }
+    int getPermitDurationRemaining() const { return _permit_duration_remaining; }
 
 private:
     std::string _permit_number;
     int _permit_duration_remaining;
 };
+
 
 #endif // PERMIT_H
