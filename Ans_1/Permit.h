@@ -3,17 +3,16 @@
 
 #include <string>
 
-class Permit
-{
-private:
-    std::string _permit_number;
-    int _permit_duration_remaining;
-
+class Permit {
 public:
-    Permit(std::string permit_number, int permit_duration_remaining);
+    Permit(std::string permitNumber, int durationRemaining);
 
     std::string getPermitNumber() const;
     int getPermitDurationRemaining() const;
+
+private:
+    std::string _permit_number;
+    int _permit_duration_remaining;
 };
 
 #endif // PERMIT_H

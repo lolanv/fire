@@ -1,24 +1,20 @@
 #include "TransportVehicle.h"
 
-TransportVehicle::TransportVehicle(std::shared_ptr<Permit> permit, std::string vehicle_type, int seat_count, int stops_count)
-    : _permit{permit}, _vehicle_type{vehicle_type}, _seat_count{seat_count}, _stops_count{stops_count} {}
+TransportVehicle::TransportVehicle(std::shared_ptr<Permit> permit, std::string vehicleType, int seatCount, int stopsCount)
+    : _permit(std::move(permit)), _vehicle_type(std::move(vehicleType)), _seat_count(seatCount), _stops_count(stopsCount) {}
 
-std::shared_ptr<Permit> TransportVehicle::getPermit() const
-{
+std::shared_ptr<Permit> TransportVehicle::getPermit() const {
     return _permit;
 }
 
-std::string TransportVehicle::getVehicleType() const
-{
+std::string TransportVehicle::getVehicleType() const {
     return _vehicle_type;
 }
 
-int TransportVehicle::getSeatCount() const
-{
+int TransportVehicle::getSeatCount() const {
     return _seat_count;
 }
 
-int TransportVehicle::getStopsCount() const
-{
+int TransportVehicle::getStopsCount() const {
     return _stops_count;
 }

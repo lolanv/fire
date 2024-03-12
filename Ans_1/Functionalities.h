@@ -1,18 +1,23 @@
 #ifndef FUNCTIONALITIES_H
 #define FUNCTIONALITIES_H
 
+#include "TransportVehicle.h"
 #include <vector>
 #include <thread>
-#include <string>
+#include <optional>
 
-class TransportVehicle;
+class Functionalities {
+public:
+    using SharedTransportVehicle = std::shared_ptr<TransportVehicle>;
 
-void createTransportVehicles(std::vector<std::shared_ptr<TransportVehicle>> &vehicles);
+    Functionalities(std::vector<SharedTransportVehicle> vehicles);
 
-void findAndDisplayPermitNumber(const std::vector<std::shared_ptr<TransportVehicle>> &vehicles, int index);
+    std::optional<std::string> findPermitNumberAtIndex(int index);
+    std::optional<double> calculateAverageSeatCount(const std::string& vehicleType);
+    bool areAllVehicleTypesSame();
 
-void findAndPrintAverageSeatCount(const std::vector<std::shared_ptr<TransportVehicle>> &vehicles, const std::string &vehicle_type);
-
-void findAndPrintSameVehicleType(const std::vector<std::shared_ptr<TransportVehicle>> &vehicles);
+private:
+    std::vector<SharedTransportVehicle> _vehicles;
+};
 
 #endif // FUNCTIONALITIES_H
