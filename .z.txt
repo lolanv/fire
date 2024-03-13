@@ -1,0 +1,19 @@
+create a class Order 
+
+std::string _id;
+    float _value;
+    OrderType _type;(PAID,COD,PROMOTION)
+    float _discount;
+
+
+create a functionlitiea.cpp fie
+
+1) A function to create 5 objcet on heap
+
+2) a function to find and return the _type of the order whose _id is passed as an argument
+
+3) A function and retun the _id of the order whose _discount amount is lowest. if there are mutltiple lowest value,consider the first lowest found form the start of the data contsiner.
+
+4) A function and retun the last N isnstance in the container where N is passed as a paramenter to function
+
+Corner case requried
