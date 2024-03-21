@@ -50,3 +50,132 @@ Invoke the Adaptor function by passing the following function as parameters to i
 Note: Create the appropriate main function to demostrate all functioalities
 
 Write code in morder cpp and Create a functioalities.h and functioalities.cpp and main.cpp files
+
+use 
+#include<array>
+#include<function>
+
+
+
+
+Sun:
+
+functioalities.h:
+
+#ifndef FUNCTIONALITIES_H
+#define FUNCTIONALITIES_H
+
+#include <iostream>
+#include <array>
+#include <functional>
+
+
+using ArrContainer = std::array<int, 100>;
+using FnType = std::function<void(int R, int C, int *data)>;
+
+void FillData(int R, int C, ArrContainer &data);
+void Adaptor(int R, int C, ArrContainer &data, FnType func);
+
+void DisplayRowSums(int R, int C, int *data);
+void DisplayHighestValue(int R, int C, int *data);
+extern FnType DisplayLastElementSquare;
+extern FnType DisplayMaxColumnValues;
+
+#endif // FUNCTIONALITIES_H
+
+
+
+functioalities.cpp:
+
+#include "Functionalities.h"
+
+void FillData(int R, int C, ArrContainer &data)
+{
+    int index = 0;
+    for (int i = 0; i < R; i++)
+    {
+        for (int j = 0; j < C; j++)
+        {
+            std::cin >> data[index];
+            index++;
+        }
+    }
+}
+
+void Adaptor(int R, int C, ArrContainer &data, FnType func)
+{
+    func(R, C, data.data());
+}
+
+void DisplayRowSums(int R, int C, int *data)
+{
+
+    for (int i = 0; i < R; i++)
+    {
+        int sum = 0;
+        for (int j = 0; j < C; j++)
+        {
+            sum = sum + data[i * C + j];
+        }
+        std::cout << "Sum of Row : " << sum << std::endl;
+    }
+}
+
+void DisplayHighestValue(int R, int C, int *data)
+{
+    int maxValue = data[0];
+    for (int i = 0; i < R * C; i++)
+    {
+        maxValue = std::max(maxValue, data[i]);
+    }
+
+    std::cout << "Max Value : " << maxValue << std::endl;
+}
+
+FnType DisplayLastElementSquare = [](int R, int C, int *data)
+{
+    if (R * C > 0)
+    {
+        int lastElement = data[R * C - 1];
+        std::cout << "Display Last Square : " << lastElement * lastElement << std::endl;
+    }
+};
+
+FnType DisplayMaxColumnValues = [](int R, int C, int *data)
+{
+    for (int i = 0; i < C; i++)
+    {
+        int maxValue = data[0];
+        for (int j = 0; j < R; j++)
+        {
+            maxValue = std::max(maxValue, data[i * C + j]);
+        }
+        std::cout << "Display Max Col Value : " << maxValue << std::endl;
+    }
+};
+
+
+main.cpp:
+#include<iostream>
+#include"Functionalities.h"
+
+int main(){
+    ArrContainer data;
+
+    std::cout<<"Row and Column : "<<std::endl;
+    int Row;
+    int Column;
+    std::cin>>Row>>Column;
+
+    std::cout<<"-----------------"<<std::endl;
+
+    FillData(Row,Column,data);
+    
+    Adaptor(Row,Column,data,DisplayRowSums);  // Display the sum of values in each row
+    Adaptor(Row,Column,data,DisplayHighestValue); //Dispaly hogest value in matrix
+    Adaptor(Row,Column,data,DisplayLastElementSquare); // Square of last element
+    Adaptor(Row,Column,data,DisplayMaxColumnValues); //Max Number in matrix
+}
+
+
+ye likhe hai bs sir bol rahe hai ki array mai 100 hard code ni kro ek global function bana lo to bana ke do
