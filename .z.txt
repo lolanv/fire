@@ -1,181 +1,43 @@
-Create a function FillData to generate an RXC dimension array of interger where R and C represent row and column
-count respectively (taken as input form the user). Accept RXC inputs from the user and fill the array.
+Create a Vehicel with the following attribute:
 
-For eg: The input Sequence
-            2
-            2
-            10
-            20
-            30
-            40
-
-Should create this matrix of values
-
-    10              20
-    30              40
+_vehicel_milegae which is a float
+_vehicel_fuel_capacity which is a float
+_vehicel_cost which is a float
+_vehicel_driver which is a refference wrapper to an instance of Driver created in stack memory
 
 
-Create an Adaptor function that accepts the following parameters
-    a) A value R represnting the count of rows in the 2D array.
-    b) A value C represnting the count of column in the 2D array.
-    c) A pointer to an array of interger(represnting the values generated in the FillData function).
-    d) A function wrapper to any function matching the following signature
-        1) 2 interger values (for R and C as descrived above) along with the pointer to an array of interger.
-        2) Return type of the function Should be void.
+creat a class Driver with the following attribute:
+
+_driver_lience_type which of LMV,HMV or BOTH
+_driver_experience_year which is an unsigned interger
+_driver_rating which is a float and must be between 1 to 15 (This restriction must be applied to avoid objcet getting created with value beyond this range).
 
 
-Invoke the Adaptor function by passing the following function as parameters to it
+Create a functioalities.cpp section:
+
+    1) A function CreateObject to creat at leat 3 instance of Vehicel class on the heap using a shred_ptr
+        to Vehicel for each instance created.
+    2) A function CountInstance that can display the count of Vehicel instance whose _vehicel_milegae value is above threshold value provided as a parameter to the function.
+    3) A function to return a boolean to indicate whether all instance jhave an associated _driver_rating of above 4.0 or not
+    4) A function to find all instance whose _driver_lience_type is LMV and return a container of shred_ptr such Vehicel instance.
+    5) A function ComputeDriveSalary which display a value corresponding to each Vehicel instance based on the following
+        creta:
+
+        1) For a Vehicel instance whose associated Driver has _driver_rating above 4, value to be displayed should
+            be 4 times the _driver_experience_year value
+        2) For all other instance, value to be displayed should be 3 times _driver_experience_year
+    6) A function AddInstance that accepts all required data as function parameter and add a new instance to the
+        data container (Function should allow a user to add more instance to the data container by passing parameter to the function).
 
 
-    1) A function that takes the bove matrix as input, and display the sum of values in each row.
+Note: 
 
-    For E.g For the matrix above , console Should display
-            30
-            70
-    
-    2) A function that display the higest value from the input matrix on the console.
-
-    For E.g For the matrix above, console Should display 40.
-
-    3) Lambda Function that display the square of the number ayt the last position of the matrix.
-    For E.g For the matrix above, console Should display 1600
-
-    4) Lambda function that prints the maxium number in the each column of the matrix
-
-    For E.g For the Matrix above, console Should display
-            30
-            40
-
-
-Note: Create the appropriate main function to demostrate all functioalities
-
-Write code in morder cpp and Create a functioalities.h and functioalities.cpp and main.cpp files
-
-use 
-#include<array>
-#include<function>
+1. Demostrate each functioality vy creating sutiable client sie code.
+2. Handle all possible cases.
 
 
 
+code in Mordern cpp
 
-Sun:
-
-functioalities.h:
-
-#ifndef FUNCTIONALITIES_H
-#define FUNCTIONALITIES_H
-
-#include <iostream>
-#include <array>
-#include <functional>
-
-
-using ArrContainer = std::array<int, 100>;
-using FnType = std::function<void(int R, int C, int *data)>;
-
-void FillData(int R, int C, ArrContainer &data);
-void Adaptor(int R, int C, ArrContainer &data, FnType func);
-
-void DisplayRowSums(int R, int C, int *data);
-void DisplayHighestValue(int R, int C, int *data);
-extern FnType DisplayLastElementSquare;
-extern FnType DisplayMaxColumnValues;
-
-#endif // FUNCTIONALITIES_H
-
-
-
-functioalities.cpp:
-
-#include "Functionalities.h"
-
-void FillData(int R, int C, ArrContainer &data)
-{
-    int index = 0;
-    for (int i = 0; i < R; i++)
-    {
-        for (int j = 0; j < C; j++)
-        {
-            std::cin >> data[index];
-            index++;
-        }
-    }
-}
-
-void Adaptor(int R, int C, ArrContainer &data, FnType func)
-{
-    func(R, C, data.data());
-}
-
-void DisplayRowSums(int R, int C, int *data)
-{
-
-    for (int i = 0; i < R; i++)
-    {
-        int sum = 0;
-        for (int j = 0; j < C; j++)
-        {
-            sum = sum + data[i * C + j];
-        }
-        std::cout << "Sum of Row : " << sum << std::endl;
-    }
-}
-
-void DisplayHighestValue(int R, int C, int *data)
-{
-    int maxValue = data[0];
-    for (int i = 0; i < R * C; i++)
-    {
-        maxValue = std::max(maxValue, data[i]);
-    }
-
-    std::cout << "Max Value : " << maxValue << std::endl;
-}
-
-FnType DisplayLastElementSquare = [](int R, int C, int *data)
-{
-    if (R * C > 0)
-    {
-        int lastElement = data[R * C - 1];
-        std::cout << "Display Last Square : " << lastElement * lastElement << std::endl;
-    }
-};
-
-FnType DisplayMaxColumnValues = [](int R, int C, int *data)
-{
-    for (int i = 0; i < C; i++)
-    {
-        int maxValue = data[0];
-        for (int j = 0; j < R; j++)
-        {
-            maxValue = std::max(maxValue, data[i * C + j]);
-        }
-        std::cout << "Display Max Col Value : " << maxValue << std::endl;
-    }
-};
-
-
-main.cpp:
 #include<iostream>
-#include"Functionalities.h"
-
-int main(){
-    ArrContainer data;
-
-    std::cout<<"Row and Column : "<<std::endl;
-    int Row;
-    int Column;
-    std::cin>>Row>>Column;
-
-    std::cout<<"-----------------"<<std::endl;
-
-    FillData(Row,Column,data);
-    
-    Adaptor(Row,Column,data,DisplayRowSums);  // Display the sum of values in each row
-    Adaptor(Row,Column,data,DisplayHighestValue); //Dispaly hogest value in matrix
-    Adaptor(Row,Column,data,DisplayLastElementSquare); // Square of last element
-    Adaptor(Row,Column,data,DisplayMaxColumnValues); //Max Number in matrix
-}
-
-
-ye likhe hai bs sir bol rahe hai ki array mai 100 hard code ni kro ek global function bana lo to bana ke do
+#include<functional>
