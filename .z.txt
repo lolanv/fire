@@ -1,28 +1,52 @@
-creae a class Device having:
+Create a function FillData to generate an RXC dimension array of interger where R and C represent row and column
+count respectively (taken as input form the user). Accept RXC inputs from the user and fill the array.
 
-_device_id which is a string
-_device_type which is either INFOTAINMENT,ACCESSORY,SAFETY
-_device_battery_level which must be an interger value between 1 to 100.
-_device_driver which is a pointer to an instance of type DeviceDriver.
-A fuction to find _batter_drain_factor which return a float value based on the floowing condition:
+For eg: The input Sequence
+            2
+            2
+            10
+            20
+            30
+            40
+
+Should create this matrix of values
+
+    10              20
+    30              40
 
 
-1) if Device is of _device_type INFOTAINMENT or ACCESSORY , value sholud be 0.25.
+Create an Adaptor function that accepts the following parameters
+    a) A value R represnting the count of rows in the 2D array.
+    b) A value C represnting the count of column in the 2D array.
+    c) A pointer to an array of interger(represnting the values generated in the FillData function).
+    d) A function wrapper to any function matching the following signature
+        1) 2 interger values (for R and C as descrived above) along with the pointer to an array of interger.
+        2) Return type of the function Should be void.
 
-2) Id Device is of _device_type SAFETY, value sholud be 0.5, if current _device_battery_level is above 50 else it sholud be 0.4.
+
+Invoke the Adaptor function by passing the following function as parameters to it
 
 
-Create a class DeviceDriver with the following attributes.
+    1) A function that takes the bove matrix as input, and display the sum of values in each row.
 
-1) _version_number which is a string value.
-2) _release_quarter which could be Q1,Q2,Q3 or Q4.
-3) _size_in_bytes which is a float value
+    For E.g For the matrix above , console Should display
+            30
+            70
+    
+    2) A function that display the higest value from the input matrix on the console.
 
-Create a functionalites.cpp file:
+    For E.g For the matrix above, console Should display 40.
 
-1) A function to Create 5 instance of Device type on the heap using shared_ptr.
-2) A function to find and return the _device_id of all instance in a container which return _batter_drain_factor value below 0.4
-3) A function to check if all Device instance are of the same _device_type or not and return a boolean accordingly.
-4) A function to display the lowest and heigst _size_in_bytes amongst instance whose _release_quarter is either Q1 or Q4 [Consider only Q1 and Q4 _release_quarter instance for computing the result].
-5) A function to find and return the _version_number of all DeviceDriver for the instance whose _device_id matches with the id value provided as a parameter to the function.
-6) A function to delete heap allocations if you have created instance using raw pointer
+    3) Lambda Function that display the square of the number ayt the last position of the matrix.
+    For E.g For the matrix above, console Should display 1600
+
+    4) Lambda function that prints the maxium number in the each column of the matrix
+
+    For E.g For the Matrix above, console Should display
+            30
+            40
+
+
+Note: Create the appropriate main function to demostrate all functioalities
+
+Write code in morder cpp and Create a functioalities.h and functioalities.cpp and main.cpp files
