@@ -1,43 +1,28 @@
-Create a Vehicel with the following attribute:
+Create the following in Functionalities.cpp file
 
-_vehicel_milegae which is a float
-_vehicel_fuel_capacity which is a float
-_vehicel_cost which is a float
-_vehicel_driver which is a refference wrapper to an instance of Driver created in stack memory
+1) A function the accept a container of interger and return the sum of first 3 numbers in the container .
+    For Example, a container of values {1,2,3,4,5 } would return the value 6.
 
+2) A function that accept a container of interger and return the minium numbers amongst the last 3 numbers in the  container.
+    For Example a containerof value{1,2,3,4,5} would return the value 3.
 
-creat a class Driver with the following attribute:
+3) A functionto to accept a container of interger and return a container of all prime numbers form the given input value.
+    For Example a container of value {1,2,3,4,5} would return the value {2,3,5}
 
-_driver_lience_type which of LMV,HMV or BOTH
-_driver_experience_year which is an unsigned interger
-_driver_rating which is a float and must be between 1 to 15 (This restriction must be applied to avoid objcet getting created with value beyond this range).
+4) A function to accept a container of interger and a predicate lambda function. the function should return a container of interger
+    which pass the condition of the predicate (return true for predicate applied). For Example a container of value {1,2,3,4,5} along with a predicate
+    [](int num){return num%2==0;} would return {2,4}.
 
+5) A function to accept a containerof string and return the string with the maxium amount of Characerts in it.
+    For Example a container os string {"C++" ,"Coding" , "Demo"} would return the value "Coding".
 
-Create a functioalities.cpp section:
-
-    1) A function CreateObject to creat at leat 3 instance of Vehicel class on the heap using a shred_ptr
-        to Vehicel for each instance created.
-    2) A function CountInstance that can display the count of Vehicel instance whose _vehicel_milegae value is above threshold value provided as a parameter to the function.
-    3) A function to return a boolean to indicate whether all instance jhave an associated _driver_rating of above 4.0 or not
-    4) A function to find all instance whose _driver_lience_type is LMV and return a container of shred_ptr such Vehicel instance.
-    5) A function ComputeDriveSalary which display a value corresponding to each Vehicel instance based on the following
-        creta:
-
-        1) For a Vehicel instance whose associated Driver has _driver_rating above 4, value to be displayed should
-            be 4 times the _driver_experience_year value
-        2) For all other instance, value to be displayed should be 3 times _driver_experience_year
-    6) A function AddInstance that accepts all required data as function parameter and add a new instance to the
-        data container (Function should allow a user to add more instance to the data container by passing parameter to the function).
-
-
-Note: 
-
-1. Demostrate each functioality vy creating sutiable client sie code.
-2. Handle all possible cases.
+6) A function to accept a container of string and return a container of non-vowel Characerts from the input
+    string value. For Example , a container of string {"C++" ,"Coding" , "Demo"} would return 
+    {'C' , '+' ,'+','C','d','n','g','D','m'}.
 
 
 
-code in Mordern cpp
+Note:
 
-#include<iostream>
-#include<functional>
+    1. Use std::async to execute each functionality in a seprate thread.
+    2. Handle corner cases with std::optional and std::future_error whenever applicable.
