@@ -1,28 +1,260 @@
-Create the following in Functionalities.cpp file
+create a class automobile with the following attributes:
 
-1) A function the accept a container of interger and return the sum of first 3 numbers in the container .
-    For Example, a container of values {1,2,3,4,5 } would return the value 6.
-
-2) A function that accept a container of interger and return the minium numbers amongst the last 3 numbers in the  container.
-    For Example a containerof value{1,2,3,4,5} would return the value 3.
-
-3) A functionto to accept a container of interger and return a container of all prime numbers form the given input value.
-    For Example a container of value {1,2,3,4,5} would return the value {2,3,5}
-
-4) A function to accept a container of interger and a predicate lambda function. the function should return a container of interger
-    which pass the condition of the predicate (return true for predicate applied). For Example a container of value {1,2,3,4,5} along with a predicate
-    [](int num){return num%2==0;} would return {2,4}.
-
-5) A function to accept a containerof string and return the string with the maxium amount of Characerts in it.
-    For Example a container os string {"C++" ,"Coding" , "Demo"} would return the value "Coding".
-
-6) A function to accept a container of string and return a container of non-vowel Characerts from the input
-    string value. For Example , a container of string {"C++" ,"Coding" , "Demo"} would return 
-    {'C' , '+' ,'+','C','d','n','g','D','m'}.
+1) _id which is a string(assign a unique value for _id for each object)
+2) _type which could be either REGULAR or TRANSPOSRT 
+3) _price which is float value.
+4) _seat_count which is an interger
+5) _engine_horsepower whcih is an interger
+6) A function CalcuatlateGSt() which return 18% of the _price as answer.
 
 
+Create a EvCar which has following attributes
+
+1) _battery_capacity whcih is a float
+2) _price which is a float value
+4) _charging_type which could be either DC,AC or BOTH.
+5) A function CalcuatlateGSt() which return 10% of the _price as a answer
+
+
+Create a singleton class Opeartion with the following member function.
+
+1) A function to create at least 3 objects of type Automobile and at leat 2 object of type EvCar on the heap using 
+    smart pointer in a vector type container. All instance created must be stored in the same container.
+
+2) A function to find and display the average GST amount paid for all EvCar instance in the data container created.
+    . (Use the CalcuatlateGSt() function to fetch the amount).
+
+3) A function to find and display the count of Automobile instance whose _seat_count is above 4.
+
+4) A function to find and display the average _price of all instance of Automobile in the data container.
+
+5) A function to find if at least one instance of EvCar type has _charging_type value as DC or not and display true or false accordingly.
 
 Note:
+Execute all functionalities vy createing std::thread instance for each function in Opeartion class.
 
-    1. Use std::async to execute each functionality in a seprate thread.
-    2. Handle corner cases with std::optional and std::future_error whenever applicable.
+Make a .h and .cpp file for each class and main.cpp file and .h file for eum class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////
+
+
+
+automobile.h:
+
+cpp
+Copy code
+#ifndef AUTOMOBILE_H
+#define AUTOMOBILE_H
+
+#include <string>
+
+class Automobile {
+private:
+    std::string _id;
+    std::string _type;
+    float _price;
+    int _seat_count;
+    int _engine_horsepower;
+
+public:
+    Automobile(std::string id, std::string type, float price, int seat_count, int engine_horsepower);
+    float CalculateGST() const;
+    // Getters and setters if needed
+};
+
+#endif // AUTOMOBILE_H
+automobile.cpp:
+
+cpp
+Copy code
+#include "automobile.h"
+
+Automobile::Automobile(std::string id, std::string type, float price, int seat_count, int engine_horsepower)
+    : _id(id), _type(type), _price(price), _seat_count(seat_count), _engine_horsepower(engine_horsepower) {}
+
+float Automobile::CalculateGST() const {
+    return 0.18f * _price;
+}
+evcar.h:
+
+cpp
+Copy code
+#ifndef EVCAR_H
+#define EVCAR_H
+
+#include <string>
+
+class EvCar {
+private:
+    float _battery_capacity;
+    float _price;
+    std::string _charging_type;
+
+public:
+    EvCar(float battery_capacity, float price, std::string charging_type);
+    float CalculateGST() const;
+    // Getters and setters if needed
+};
+
+#endif // EVCAR_H
+evcar.cpp:
+
+cpp
+Copy code
+#include "evcar.h"
+
+EvCar::EvCar(float battery_capacity, float price, std::string charging_type)
+    : _battery_capacity(battery_capacity), _price(price), _charging_type(charging_type) {}
+
+float EvCar::CalculateGST() const {
+    return 0.10f * _price;
+}
+operation.h:
+
+cpp
+Copy code
+#ifndef OPERATION_H
+#define OPERATION_H
+
+#include <vector>
+#include <memory>
+#include <thread>
+
+class Operation {
+public:
+    Operation() = default;
+    void CreateObjects();
+    void DisplayAverageGST();
+    void DisplaySeatCountAbove4();
+    void DisplayAveragePrice();
+    void CheckChargingTypeDC();
+};
+
+#endif // OPERATION_H
+#include "operation.h"
+#include "automobile.h"
+#include "evcar.h"
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+
+void Operation::CreateObjects() {
+    std::vector<std::shared_ptr<Automobile>> automobiles;
+    std::vector<std::shared_ptr<EvCar>> evcars;
+
+    // Create at least 3 objects of type Automobile
+    automobiles.push_back(std::make_shared<Automobile>("1", "REGULAR", 10000.0f, 5, 200));
+    automobiles.push_back(std::make_shared<Automobile>("2", "TRANSPORT", 15000.0f, 7, 250));
+    automobiles.push_back(std::make_shared<Automobile>("3", "REGULAR", 12000.0f, 4, 180));
+
+    // Create at least 2 objects of type EvCar
+    evcars.push_back(std::make_shared<EvCar>(50.0f, 30000.0f, "DC"));
+    evcars.push_back(std::make_shared<EvCar>(60.0f, 35000.0f, "AC"));
+
+    // Merge all instances into the same container
+    automobiles.insert(automobiles.end(), evcars.begin(), evcars.end());
+}
+
+void Operation::DisplayAverageGST() {
+    // Get all EvCar instances and calculate their GST
+    // Assuming automobiles is a shared container holding both Automobile and EvCar instances
+    std::vector<std::shared_ptr<Automobile>> automobiles; // Assuming this is accessible here
+    std::vector<float> gst_values;
+
+    for (const auto& auto_ptr : automobiles) {
+        auto ev_car_ptr = std::dynamic_pointer_cast<EvCar>(auto_ptr);
+        if (ev_car_ptr) {
+            gst_values.push_back(ev_car_ptr->CalculateGST());
+        }
+    }
+
+    if (!gst_values.empty()) {
+        float average_gst = std::accumulate(gst_values.begin(), gst_values.end(), 0.0f) / gst_values.size();
+        std::cout << "Average GST for EvCars: " << average_gst << std::endl;
+    } else {
+        std::cout << "No EvCar instances found." << std::endl;
+    }
+}
+
+void Operation::DisplaySeatCountAbove4() {
+    std::vector<std::shared_ptr<Automobile>> automobiles; // Assuming this is accessible here
+    int count = 0;
+    for (const auto& auto_ptr : automobiles) {
+        if (auto_ptr->GetType() == "REGULAR" && auto_ptr->GetSeatCount() > 4) {
+            count++;
+        }
+    }
+    std::cout << "Count of Automobile instances with seat count above 4: " << count << std::endl;
+}
+
+void Operation::DisplayAveragePrice() {
+    std::vector<std::shared_ptr<Automobile>> automobiles; // Assuming this is accessible here
+    float total_price = 0.0f;
+    for (const auto& auto_ptr : automobiles) {
+        total_price += auto_ptr->GetPrice();
+    }
+    if (!automobiles.empty()) {
+        float average_price = total_price / automobiles.size();
+        std::cout << "Average price of all instances: " << average_price << std::endl;
+    } else {
+        std::cout << "No instances found." << std::endl;
+    }
+}
+
+void Operation::CheckChargingTypeDC() {
+    std::vector<std::shared_ptr<Automobile>> automobiles; // Assuming this is accessible here
+    bool has_dc_charging = false;
+    for (const auto& auto_ptr : automobiles) {
+        auto ev_car_ptr = std::dynamic_pointer_cast<EvCar>(auto_ptr);
+        if (ev_car_ptr && ev_car_ptr->GetChargingType() == "DC") {
+            has_dc_charging = true;
+            break;
+        }
+    }
+    std::cout << "At least one EvCar has DC charging: " << std::boolalpha << has_dc_charging << std::endl;
+}
+
+
+
+
+
+main.cpp:
+
+cpp
+Copy code
+#include "operation.h"
+#include <thread>
+
+int main() {
+    Operation operation;
+
+    std::thread t1(&Operation::CreateObjects, &operation);
+    std::thread t2(&Operation::DisplayAverageGST, &operation);
+    std::thread t3(&Operation::DisplaySeatCountAbove4, &operation);
+    std::thread t4(&Operation::DisplayAveragePrice, &operation);
+    std::thread t5(&Operation::CheckChargingTypeDC, &operation);
+
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    t5.join();
+
+    return 0;
+}
