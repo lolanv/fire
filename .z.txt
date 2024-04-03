@@ -1,36 +1,44 @@
-Create a class EvCar which having attribute.
+Create a class Car having attribute:
+std::string m_car_reg_num;
+    float m_price;
+    Reff m_car_engine; (using Reff=std::reference_wrapper<Engine>;)
+
+Create a class Engine having attribute:
+
+std::string m_engine_number;
+    int m_engine_torque;
+    int m_horsepower;
+    EngineType m_engine_type; (CRDI,MPFI,TURBOCHARGED)
 
 
-std::string m_car_id;
-    int m_battery_charging_time;
-    Platfrom m_platfrom; {PURE_EV or IC_BASED}
-    float m_chassos_length;
-    int m_seat_count;
-    int m_top_speed;
+Create the following functions in a singleton class Operation.
 
-Create following function in Functionalities.cpp file
+1) A function which create at least 5 instance in a container that allows index based access to instance and allows
+    dynamic resizing. instance must be craeted on the heap and must be managed by smart pointer(shared_ptr)
 
-1) A function Create at leat 5 instance in a container that stores data contiguously. instance must be created
-    on the heap and must be managed by smart pointer(std::shared_ptr)
+2) A function to return a container of Engine reference_wrapper for each instance of the input data.(Hint: Copy
+    m_car_engine attribute of all instance into a container and return it).
 
-2) A function to find and return std::list of first N instance form the input container where N is taken as an input parameter.(Consider invalid N value corner case appropriately).
+3) A function to return a boolean to indicate wheather all instance have m_engine_torque value above 120.
 
-3) A function to find and return the m_top_speed of the EvCar instance form container whose m_car_id is passed as a parameter.
+4) A function to find the average m_horsepower value from instance whose m_price value is above a threashold value as a parameter.
+    [Hint: if threashold value is 45000, identify instance with m_price above 45000 and find average m_horsepower from these instance only.]
 
-4) A function to find and return count of instance whose m_chassos_length is above 2.7f.
+5) A function to find the m_engine_type value of the instance whose m_car_reg_num is passed as a parameter.
 
-5) A function to return the container of all instance from the input data which satisfy a predicate. (passed as a fiunction pointer or lambda function).
-
-6) A function to find and return a boolean to indeicate wheather at leat one input data instance has m_platfrom value as a PURE_EV.
+6) A function to find the return Engine reference_wrapper for the instance m_engine_torque is the highest.
 
 
 Note: 
 a) Create special member function as per requriment.
 
-b) All corner case for Functionalities must be handle using std::nullopt and std::optional
+b) All Corner Cases for functionalities must be handled using std::optinal types. Customer exception are not required.
 
-c) All data processing operation must be performed using STL algorithm.
+c) All data processing Operations must be performed using STL algorithms.
 
-d) Demostrate Functionalities by createing a sutaible Main.cpp file
+d) Demostrate functionalities by createing a suitable main.cpp file.
 
-Create a .h and .cpp file for each class and Functionalities .h and .cpp and main.cpp file
+e) Execute all functionalities in a seprate std::async thread
+
+
+Create .h and .cpp file for each class and .h and .cpp file for functionalities and main.cpp file also
