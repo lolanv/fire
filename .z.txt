@@ -1,44 +1,34 @@
-Create a class Car having attribute:
-std::string m_car_reg_num;
-    float m_price;
-    Reff m_car_engine; (using Reff=std::reference_wrapper<Engine>;)
+Create a class CarUnit with the attribute:
 
-Create a class Engine having attribute:
-
-std::string m_engine_number;
-    int m_engine_torque;
-    int m_horsepower;
-    EngineType m_engine_type; (CRDI,MPFI,TURBOCHARGED)
+std::string m_car_brand;
+float m_car_price;
+CarType m_car_type;(SEDAN,SUV,HATCHBACK)
+int m_car_top_speed;
+int m_car_rpm;
+CarGear m_car_gear_system;(PRNDL,TIPTRONIC,CLASSIC)
 
 
-Create the following functions in a singleton class Operation.
+Create a follwing function in a functionalities.cpp fie:
 
-1) A function which create at least 5 instance in a container that allows index based access to instance and allows
-    dynamic resizing. instance must be craeted on the heap and must be managed by smart pointer(shared_ptr)
+1) A function which Create at least 5 instance in a container which uses a unique std::syting ID attribute as key
+    with shared pointer to CarUnit instance being the value in the hashtable bucket.
 
-2) A function to return a container of Engine reference_wrapper for each instance of the input data.(Hint: Copy
-    m_car_engine attribute of all instance into a container and return it).
+2) A function which check wheather all instance in the data container have the same gear system or not (all 
+    instance must have the same m_car_gear_system value, types should not taken as input from the user)
 
-3) A function to return a boolean to indicate wheather all instance have m_engine_torque value above 120.
+3) A function to return a container of instance whose m_car_type matches with the value passed as parameter to this function.
 
-4) A function to find the average m_horsepower value from instance whose m_price value is above a threashold value as a parameter.
-    [Hint: if threashold value is 45000, identify instance with m_price above 45000 and find average m_horsepower from these instance only.]
+4) A function to find and return m_car_price of the instance whose m_car_top_speed is lowest.
 
-5) A function to find the m_engine_type value of the instance whose m_car_reg_num is passed as a parameter.
+5) A function to return the m_car_rpm value for all instance whose ID is passed as a parameter.(ID
+    should match with the key of the instance stored in the container)
 
-6) A function to find the return Engine reference_wrapper for the instance m_engine_torque is the highest.
-
-
-Note: 
-a) Create special member function as per requriment.
-
-b) All Corner Cases for functionalities must be handled using std::optinal types. Customer exception are not required.
-
-c) All data processing Operations must be performed using STL algorithms.
-
-d) Demostrate functionalities by createing a suitable main.cpp file.
-
-e) Execute all functionalities in a seprate std::async thread
+6) A function to return the count of instance whose m_car_price is above a threshold value (given while
+    calliing the function as parameter)
 
 
-Create .h and .cpp file for each class and .h and .cpp file for functionalities and main.cpp file also
+Note:
+1) Create special function as per requriment
+2) All Corner Case for functionalities must be handled using std::nullopt and std::optional types.
+3) All data processing operations must be performed using STL algorithms.
+4) Demostrate functionalities by Createing a sutaible main.cpp file
